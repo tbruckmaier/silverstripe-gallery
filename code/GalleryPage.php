@@ -4,20 +4,20 @@ class GalleryPage extends Page {
 	public static $many_many = array(
 		'Images' => 'Image'	
 	);
-	
+
+	static $many_many_extraFields = array(
+		'Images' => array(
+			'Caption' => 'Varchar',
+			'SortOrder' => 'Int',
+		),
+	);
+
 	public function Images() {
 		return $this->getManyManyComponents(
 			'Images',
 			'',
 			"\"GalleryPage_Images\".\"SortOrder\" ASC"
 		);
-	}
-	
-	public function ImagesCaptions() {
-		$captions = GalleryPage_Images::get()
-			->where("\"GalleryPageID\" = '{$this->ID}'")
-			->map('ImageID', 'Caption')
-			->toArray();
 	}
 
 	public function getCMSFields() {
@@ -69,20 +69,6 @@ class GalleryPage_ImageExtension extends DataExtension {
 		));
 		return $fields;
 	}
-	
-	public function Caption() {
-
-		//TODO: Make this more generic and not require a db query each time
-		$controller = Controller::curr();
-		$page = $controller->data();
-
-		$joinObj = GalleryPage_Images::get()
-			->where("\"GalleryPageID\" = '{$page->ID}' AND \"ImageID\" = '{$this->owner->ID}'")
-			->first();
-			
-		return $joinObj->Caption;
-	}
-	
 }
 
 class GalleryPage_Images extends DataObject {

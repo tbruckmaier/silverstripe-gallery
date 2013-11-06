@@ -293,16 +293,7 @@ class GalleryUploadField_ItemHandler extends UploadField_ItemHandler {
 			->where("\"SiteTree\".\"ID\" = '$parentID'")
 			->first();
 
-		list($parentClass, $componentClass, $parentField, $componentField, $table) = $record->many_many('Images');
-
-		$joinObj = $table::get()
-				->where("\"$parentField\" = '{$parentID}' AND \"ImageID\" = '{$file->ID}'")
-				->first();
-
-		$data = array(
-			'Caption' => $joinObj->Caption	
-		);
-		$form->loadDataFrom($data);
+		$form->loadDataFrom($record->getManyManyComponents('Images')->getExtraData('Images', $file->ID));
 
 		$form->addExtraClass('small');
 		return $form;
