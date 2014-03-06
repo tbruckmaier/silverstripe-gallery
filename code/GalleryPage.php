@@ -7,7 +7,7 @@ class GalleryPage extends Page {
 
 	static $many_many_extraFields = array(
 		'Images' => array(
-			'Caption' => 'Varchar',
+			'Caption' => 'Text',
 			'SortOrder' => 'Int',
 		),
 	);
