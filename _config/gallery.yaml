@@ -1,0 +1,13 @@
+---
+name: gallery
+---
+
+Image:
+  extensions: 
+    - 'Gallery_ImageExtension'
+GalleryPage:
+  extensions: 
+    - 'Gallery_PageExtension'
+GalleryPage_Controller:
+  extensions: 
+    - 'Fancybox2_ControllerExtension'

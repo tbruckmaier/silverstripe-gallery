@@ -1,4 +1,5 @@
 <?php
+
 class GalleryPage extends Page {
 	
 	public static $many_many = array(
@@ -35,49 +36,15 @@ class GalleryPage_Controller extends Page_Controller {
 	
 	public function init() {
 		parent::init();
-
-		Requirements::javascript('gallery/javascript/jquery-1.7.1.min.js');
-		Requirements::javascript('gallery/javascript/jquery.fancybox.js');
-		Requirements::javascript('gallery/javascript/GalleryPage.js');
-
-		Requirements::css('gallery/css/jquery.fancybox.css');
-	}
-}
-
-class GalleryPage_ImageExtension extends DataExtension {
-
-	public static $belongs_many_many = array(
-		'Pages' => 'Page'
-	);
-
-	public function getUploadFields() {
-
-		$fields = $this->owner->getCMSFields();
-
-		$fileAttributes = $fields->fieldByName('Root.Main.FilePreview')->fieldByName('FilePreviewData');
-		$fileAttributes->push(TextareaField::create('Caption', 'Caption:')->setRows(4));
-
-		$fields->removeFieldsFromTab('Root.Main', array(
-			'Title',
-			'Name',
-			'OwnerID',
-			'ParentID',
-			'Created',
-			'LastEdited',
-			'BackLinkCount',
-			'Dimensions'
-		));
-		return $fields;
 	}
 }
 
 class GalleryPage_Images extends DataObject {
 	
-	static $db = array (
-		'GalleryPageID' => 'Int',
+	private static $db = array (
+		'PageID' => 'Int',
 		'ImageID' => 'Int',
 		'Caption' => 'Text',
 		'SortOrder' => 'Int'
 	);
 }
-
