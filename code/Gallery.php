@@ -52,23 +52,4 @@ class Gallery_ImageExtension extends DataExtension {
 		));
 		return $fields;
 	}
-	
-	public function Caption() {
-
-		//TODO: Refactor so doesn't query database each time
-		$controller = Controller::curr();
-		$page = $controller->data();
-		list($parentClass, $componentClass, $parentField, $componentField, $table) = $page->many_many('Images');
-
-                // check if page return many_many Images when not $table is not a object
-                if(is_object($table)) {
-                    $joinObj = $table::get()
-                            ->where("\"{$parentField}\" = '{$page->ID}' AND \"ImageID\" = '{$this->owner->ID}'")
-                            ->first();
-
-                    return $joinObj->Caption;
-                }
-                
-                return false;
-	}
 }
